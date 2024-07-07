@@ -14,8 +14,7 @@ useful for anything else.**
 The Yo-dawg-ml-model architecture (also known as the Yung-Kofman-Hermann architecture) is a generalization of the
 classical decision trees.
 Instead of the decision nodes splitting the data on a simple feature threshold, arbitrary model types (linear
-regression, support-vector machine, multi-layer perceptron) are put in place
-here.
+regression, support-vector machine, multi-layer perceptron) are put in place here.
 In addition, the leaf nodes also don't have a fixed value, and sub-models do the prediction part here too.
 
 ## When is this helpful?
@@ -32,8 +31,7 @@ So, **it is highly recommended to not actually use this for anything serious**.
 ## Implementation
 
 The basis is a simplified standard recursive decision-tree implementation using the Gini impurity to select a good
-decider on each
-node. I can only handle numerical features.
+decider on each node. It can only handle numerical features.
 It gives (at least for the training set) similar results to the scikit-learn implementation:
 
 ```
