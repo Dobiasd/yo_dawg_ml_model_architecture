@@ -62,6 +62,6 @@ if score > 0.8:
     score = model_b.predict(image)
 ```
 
-Even without any consciousness-altering drugs, it was "obvious", that it was actually a small decision tree
-decision thresholds being applied to a model score instead of a simple input feature.
+**Obviously** this is actually a small decision tree,
+with decision thresholds being applied to a model score instead of a simple input feature.
 So this repository is the logical consequence of expanding on this idea.
