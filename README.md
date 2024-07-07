@@ -7,13 +7,14 @@
 **Disclaimer: This is just a fun experiment, I conducted for my own curiosity and entertainment. It's not intended to be
 useful for anything else.**
 
-# yo-dawg-ml-model architecture
+# Yo-dawg-ml-model architecture
 
 ![yo_dawg](yo_dawg.jpg)
 
 The Yo-dawg-ml-model architecture (also known as the Yung-Kofman-Hermann architecture) is a generalization of the
 classical decision trees.
-Instead of the decision nodes splitting the data on a simple feature threshold, arbitrary model types are put in place
+Instead of the decision nodes splitting the data on a simple feature threshold, arbitrary model types (linear
+regression, support-vector machine, multi-layer perceptron) are put in place
 here.
 In addition, the leaf nodes also don't have a fixed value, and sub-models do the prediction part here too.
 
