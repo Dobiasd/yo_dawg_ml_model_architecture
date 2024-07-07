@@ -31,7 +31,7 @@ So, **it is highly recommended to not actually use this for anything serious**.
 ## Implementation
 
 The basis is a simplified standard recursive decision-tree implementation using the Gini impurity to select a good
-decider on each node. It can only handle numerical features.
+decider on each node. It can only handle numerical features and only supports regression (not classification).
 It gives (at least for the training set) similar results to the scikit-learn implementation:
 
 ```
