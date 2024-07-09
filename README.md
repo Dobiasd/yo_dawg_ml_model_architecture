@@ -17,16 +17,10 @@ Instead of the decision nodes splitting the data on a simple feature threshold, 
 regression, support-vector machine, multi-layer perceptron) are put in place here.
 In addition, the leaf nodes also don't have a fixed value, and sub-models do the prediction part here too.
 
-## When is this helpful?
+## Is this helpful?
 
-- Probably never!
-- You'd like to introduce additional complexity and computational cost.
-
-## When is this not useful?
-
-- Almost always!
-
-So, **it is highly recommended to not actually use this for anything serious**.
+Probably not.
+It introduces additional complexity and computational cost but has not yet proven to give significantly superior results.
 
 ## Implementation
 
