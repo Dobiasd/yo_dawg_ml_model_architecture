@@ -19,8 +19,7 @@ In addition, the leaf nodes also don't have a fixed value, and sub-models do the
 
 ## Is this helpful?
 
-Probably not.
-It introduces additional complexity and computational cost but has not yet proven to give significantly superior results.
+Maybe, not sure yet if the additional complexity and computational cost is worth it.
 
 ## Implementation
 
@@ -29,20 +28,17 @@ decider on each node. It can only handle numerical features and only supports re
 It gives (at least for the training set) similar results to the scikit-learn implementation:
 
 ```
-Train RMSE: 234307.29021948934
-Test RMSE: 2020800.0165108559
-
 sklearn.tree train RMSE: 234307.29021948934
-sklearn.tree Test RMSE: 1886618.9323697414
+sklearn.tree test RMSE: 1867327.0588195834
+custom.tree train RMSE: 234307.29021948934
+custom.tree test RMSE: 2020800.0165108559
 ```
 
-With the advanced deciders enabled, it still works, gives better results on the test set than the "boring" version,
-and sometimes (with some luck) even gives better results on the test set than the scikit-learn tree (cherry-picked
-result below):
+With the advanced deciders enabled, it still works, and gives better results on the test set than the "boring" version:
 
 ```
-Train RMSE: 234307.29021948934
-Test RMSE: 1873213.1994037377
+yo-dawg.tree train RMSE: 234307.29021948934
+yo-dawg.tree test RMSE: 1873213.1994037377
 ```
 
 ## Origin story
