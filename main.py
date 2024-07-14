@@ -313,8 +313,6 @@ def train_sklearn(data_train: LabelledDataSet):
     clf = tree.DecisionTreeRegressor(random_state=42)
     x_train, y_train = tabularize(data_train)
     clf = clf.fit(x_train, y_train)
-    # from sklearn.tree import export_text
-    # print(export_text(clf))
     return clf
 
 
@@ -325,12 +323,14 @@ def test_rmse_sklearn(clf: Any, data: LabelledDataSet):
 
 def main() -> None:
     data_file_path = "housing_numerical.csv"  # source: https://www.kaggle.com/datasets/ashydv/housing-dataset
-    data = load_data(Path(data_file_path), "price")
-    data_train, data_test = split_data(data)
+    data_train, data_test = split_data(load_data(Path(data_file_path), "price"))
     tree = train_sklearn(data_train)
+    # from sklearn.tree import export_text
+    # print(export_text(tree))
     print(f'sklearn.tree train RMSE: {test_rmse_sklearn(tree, data_train)}')
     print(f'sklearn.tree test RMSE: {test_rmse_sklearn(tree, data_test)}')
     tree = train(data_train, DeciderType.THRESHOLD)
+    # print(show_tree(tree))
     print(f'custom.tree train RMSE: {test_rmse(tree, data_train)}')
     print(f'custom.tree test RMSE: {test_rmse(tree, data_test)}')
     tree = train(data_train, DeciderType.YODAWG)
