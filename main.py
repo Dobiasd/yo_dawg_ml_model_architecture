@@ -27,7 +27,10 @@ random.seed(42)
 
 T = TypeVar("T")
 
-decider_type_to_use = "model"  # threshold or model
+
+class DeciderType(Enum):
+    THRESHOLD = auto()
+    YODAWG = auto()
 
 
 class ThresholdPolicy(Enum):
@@ -236,7 +239,7 @@ def split_impurity(left: LabelledDataSet, right: LabelledDataSet) -> float:
     return p * data_impurity(left) + (1 - p) * data_impurity(right)
 
 
-def best_split(data: LabelledDataSet) -> Optional[Decider]:
+def best_split(data: LabelledDataSet, decider_type_to_use: DeciderType) -> Optional[Decider]:
     if len(data) < 2:
         return None
 
@@ -247,9 +250,9 @@ def best_split(data: LabelledDataSet) -> Optional[Decider]:
         return split_impurity(*partition(lambda point: d(point[1]), data))
 
     deciders: List[Decider]
-    if decider_type_to_use == "threshold":
+    if decider_type_to_use == DeciderType.THRESHOLD:
         deciders = [ThresholdDecider(feat, t) for feat in features for t in set(map(lambda p: p[1][feat], data))]
-    elif decider_type_to_use == "model":
+    elif decider_type_to_use == DeciderType.YODAWG:
         predictors = [
             LinearRegressionPredictor(data),
             SVMPredictor(data),
@@ -265,19 +268,19 @@ def best_split(data: LabelledDataSet) -> Optional[Decider]:
     return best_decider
 
 
-def train(data: LabelledDataSet) -> TreeNode:
+def train(data: LabelledDataSet, decider_type_to_use: DeciderType) -> TreeNode:
     assert len(data) > 0
     if len(data) < 2:
         return FixedTreeLeaf(data[0][0])
-    decider = best_split(data)
+    decider = best_split(data, decider_type_to_use)
     if not decider:
-        if decider_type_to_use == "threshold":
+        if decider_type_to_use == DeciderType.THRESHOLD:
             return FixedTreeLeaf(mean(list(map(itemgetter(0), data))))
-        elif decider_type_to_use == "model":
+        elif decider_type_to_use == DeciderType.YODAWG:
             return ModelTreeLeaf(LinearRegressionPredictor(data))
         assert False, f"Unknown {decider_type_to_use=}"
     data_left, data_right = partition(lambda point: decider(point[1]), data)
-    return Tree(decider, train(data_left), train(data_right))
+    return Tree(decider, train(data_left, decider_type_to_use), train(data_right, decider_type_to_use))
 
 
 def show_tree(tree: TreeNode) -> str:
@@ -300,33 +303,39 @@ def test_rmse(tree: TreeNode, data: LabelledDataSet) -> float:
     return root_mean_squared_error(list(zip(targets, predictions)))
 
 
-def compare_sklearn(data_train: LabelledDataSet, data_test: LabelledDataSet):
+def tabularize(dataset: LabelledDataSet) -> Tuple[List[List[float]], List[float]]:
+    features = set(flatten(list(map(lambda point: list(point[1].keys()), dataset))))
+    return [[point[1][feature] for feature in features] for point in dataset], list(map(itemgetter(0), dataset))
+
+
+def train_sklearn(data_train: LabelledDataSet):
     from sklearn import tree
     clf = tree.DecisionTreeRegressor(random_state=42)
-
-    def tabularize(dataset: LabelledDataSet) -> Tuple[List[List[float]], List[float]]:
-        features = set(flatten(list(map(lambda point: list(point[1].keys()), data_train))))
-        return [[point[1][feature] for feature in features] for point in dataset], list(map(itemgetter(0), dataset))
-
     x_train, y_train = tabularize(data_train)
-    x_test, y_test = tabularize(data_test)
     clf = clf.fit(x_train, y_train)
-
     # from sklearn.tree import export_text
     # print(export_text(clf))
+    return clf
 
-    print(f'sklearn.tree train RMSE: {root_mean_squared_error(list(zip(y_train, clf.predict(x_train))))}')
-    print(f'sklearn.tree Test RMSE: {root_mean_squared_error(list(zip(y_test, clf.predict(x_test))))}')
+
+def test_rmse_sklearn(clf: Any, data: LabelledDataSet):
+    x, y = tabularize(data)
+    return root_mean_squared_error(list(zip(y, clf.predict(x))))
 
 
 def main() -> None:
     data = load_data(Path("housing_numerical.csv"), "price")
     data_train, data_test = split_data(data)
-    tree = train(data_train)
-    print(show_tree(tree))
+    tree = train_sklearn(data_train)
+    print(f'sklearn.tree train RMSE: {test_rmse_sklearn(tree, data_train)}')
+    print(f'sklearn.tree test RMSE: {test_rmse_sklearn(tree, data_test)}')
+    tree = train(data_train, DeciderType.THRESHOLD)
+    print(f'custom.tree train RMSE: {test_rmse(tree, data_train)}')
+    print(f'custom.tree test RMSE: {test_rmse(tree, data_test)}')
+    tree = train(data_train, DeciderType.YODAWG)
+    # print(show_tree(tree))
     print(f'yo-dawg.tree train RMSE: {test_rmse(tree, data_train)}')
     print(f'yo-dawg.tree test RMSE: {test_rmse(tree, data_test)}')
-    compare_sklearn(data_train, data_test)
 
 
 if __name__ == '__main__':
