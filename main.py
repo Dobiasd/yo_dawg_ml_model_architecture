@@ -302,7 +302,7 @@ def test_rmse(tree: TreeNode, data: LabelledDataSet) -> float:
 
 def compare_sklearn(data_train: LabelledDataSet, data_test: LabelledDataSet):
     from sklearn import tree
-    clf = tree.DecisionTreeRegressor()
+    clf = tree.DecisionTreeRegressor(random_state=42)
 
     def tabularize(dataset: LabelledDataSet) -> Tuple[List[List[float]], List[float]]:
         features = set(flatten(list(map(lambda point: list(point[1].keys()), data_train))))
