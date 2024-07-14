@@ -324,9 +324,8 @@ def main() -> None:
     data_train, data_test = split_data(data)
     tree = train(data_train)
     print(show_tree(tree))
-    print(f'Train RMSE: {test_rmse(tree, data_train)}')
-    print(f'Test RMSE: {test_rmse(tree, data_test)}')
-
+    print(f'yo-dawg.tree train RMSE: {test_rmse(tree, data_train)}')
+    print(f'yo-dawg.tree test RMSE: {test_rmse(tree, data_test)}')
     compare_sklearn(data_train, data_test)
 
 
