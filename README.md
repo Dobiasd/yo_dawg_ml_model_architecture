@@ -4,7 +4,7 @@
 
 [license]: LICENSE
 
-**Disclaimer: This is just a fun experiment, I conducted for my own curiosity and entertainment. It's not intended to be
+**Disclaimer: This is just a fun experiment, I conducted for my curiosity and entertainment. It's not intended to be
 useful for anything else.**
 
 # Yo-dawg-ml-model architecture
@@ -19,7 +19,7 @@ In addition, the leaf nodes also don't have a fixed value, and sub-models do the
 
 ## Is this helpful?
 
-Maybe, not sure yet if the additional complexity and computational cost is worth it.
+Maybe. Not sure yet if the additional complexity and computational cost are worth it.
 
 ## Implementation
 
@@ -52,6 +52,6 @@ if score > 0.8:
     score = model_b.predict(image)
 ```
 
-**Obviously** this is actually a small decision tree,
-with decision thresholds being applied to a model score instead of a simple input feature.
+**Obviously** this is a small decision tree,
+with decision thresholds applied to a model score instead of a simple input feature.
 So this repository is the logical consequence of expanding on this idea.
