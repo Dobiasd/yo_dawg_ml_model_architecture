@@ -324,7 +324,8 @@ def test_rmse_sklearn(clf: Any, data: LabelledDataSet):
 
 
 def main() -> None:
-    data = load_data(Path("housing_numerical.csv"), "price")
+    data_file_path = "housing_numerical.csv"  # source: https://www.kaggle.com/datasets/ashydv/housing-dataset
+    data = load_data(Path(data_file_path), "price")
     data_train, data_test = split_data(data)
     tree = train_sklearn(data_train)
     print(f'sklearn.tree train RMSE: {test_rmse_sklearn(tree, data_train)}')
