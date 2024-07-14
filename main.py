@@ -323,6 +323,7 @@ def test_rmse_sklearn(clf: Any, data: LabelledDataSet):
 
 def main() -> None:
     data_file_path = "housing_numerical.csv"  # source: https://www.kaggle.com/datasets/ashydv/housing-dataset
+    # data_file_path = "real_estate.csv"  # source: https://www.kaggle.com/datasets/quantbruce/real-estate-price-prediction
     data_train, data_test = split_data(load_data(Path(data_file_path), "price"))
     tree = train_sklearn(data_train)
     # from sklearn.tree import export_text
