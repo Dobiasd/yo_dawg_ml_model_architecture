@@ -35,7 +35,7 @@ custom.tree test RMSE: 1771910.6788249828
 ```
 
 With the advanced deciders enabled, it still works,
-and sometimes gives better results on the test set than the "boring" version:
+and sometimes gives better results on the test set than the "boring" version (cherry-picked result):
 
 ```
 yo-dawg.tree train RMSE: 235073.99796858433
