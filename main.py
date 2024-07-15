@@ -253,12 +253,9 @@ def best_split(data: LabelledDataSet, decider_type_to_use: DeciderType) -> Optio
     if decider_type_to_use == DeciderType.THRESHOLD:
         deciders = []
         for feat in features:
-            vals = sorted(list(set(map(lambda p: p[1][feat], data))))
-            if len(vals) > 1:
-                ts = [(a + b) / 2 for (a, b) in zip(vals, vals[1:])]
-            else:
-                ts = vals
-            deciders.extend([ThresholdDecider(feat, t) for t in ts])
+            feat_vals = sorted(list(set(map(lambda p: p[1][feat], data))))
+            thresholds = list(map(np.mean, zip(feat_vals, feat_vals[1:]))) if len(feat_vals) > 1 else feat_vals
+            deciders.extend([ThresholdDecider(feat, t) for t in thresholds])
     elif decider_type_to_use == DeciderType.YODAWG:
         predictors = [
             LinearRegressionPredictor(data),
