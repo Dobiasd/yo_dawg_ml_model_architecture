@@ -200,7 +200,7 @@ def load_data(path: Path, target_value_col_name: str) -> LabelledDataSet:
 
 def split_data(data: LabelledDataSet) -> Tuple[LabelledDataSet, LabelledDataSet]:
     random.shuffle(data)
-    split = int(0.8 * len(data))
+    split = int(0.76 * len(data))
     return data[:split], data[split:]
 
 

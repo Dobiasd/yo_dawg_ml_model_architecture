@@ -25,20 +25,21 @@ Maybe. Not sure yet if the additional complexity and computational cost are wort
 
 The basis is a simplified standard recursive decision-tree implementation using the Gini impurity to select a good
 decider on each node. It can only handle numerical features and only supports regression (not classification).
-It gives (at least for the training set) similar results to the scikit-learn implementation:
+It gives similar results to the scikit-learn implementation:
 
 ```
-sklearn.tree train RMSE: 234307.29021948934
-sklearn.tree test RMSE: 1867327.0588195834
-custom.tree train RMSE: 234307.29021948934
-custom.tree test RMSE: 2193218.5290944683
+sklearn.tree train RMSE: 235073.99796858433
+sklearn.tree test RMSE: 1772486.2439492478
+custom.tree train RMSE: 235073.99796858433
+custom.tree test RMSE: 1771910.6788249828
 ```
 
-With the advanced deciders enabled, it still works, and gives better results on the test set than the "boring" version:
+With the advanced deciders enabled, it still works,
+and sometimes gives better results on the test set than the "boring" version:
 
 ```
-yo-dawg.tree train RMSE: 234307.29021948934
-yo-dawg.tree test RMSE: 1873213.1994037377
+yo-dawg.tree train RMSE: 235073.99796858433
+yo-dawg.tree test RMSE: 1733936.984241994
 ```
 
 ## Origin story
