@@ -31,7 +31,7 @@ It gives (at least for the training set) similar results to the scikit-learn imp
 sklearn.tree train RMSE: 234307.29021948934
 sklearn.tree test RMSE: 1867327.0588195834
 custom.tree train RMSE: 234307.29021948934
-custom.tree test RMSE: 2020800.0165108559
+custom.tree test RMSE: 2193218.5290944683
 ```
 
 With the advanced deciders enabled, it still works, and gives better results on the test set than the "boring" version:
